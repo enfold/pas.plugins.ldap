@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from AccessControl import ClassSecurityInfo
-from App.class_init import InitializeClass
 from BTrees import OOBTree
 from node.ext.ldap.interfaces import ILDAPGroupsConfig
 from node.ext.ldap.interfaces import ILDAPProps
@@ -25,6 +24,11 @@ import logging
 import os
 import six
 import time
+
+try:
+    from AccessControl.class_init import InitializeClass
+except:
+    from App.class_init import InitializeClass
 
 
 logger = logging.getLogger("pas.plugins.ldap")
