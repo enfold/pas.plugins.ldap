@@ -16,6 +16,7 @@
 /htmlcov/
 /include/
 /lib/
+/lib64
 /local/
 /parts/
 /share/
@@ -23,3 +24,4 @@
 /var/
 /buildout.cfg
 /pip-selfcheck.json
+/pyvenv.cfg
