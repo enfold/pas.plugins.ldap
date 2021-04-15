@@ -2,10 +2,11 @@
 History
 =======
 
-1.8.1 (unreleased)
+1.9.0 (unreleased)
 ------------------
 
-- No changes yet.
+- Support for Redis cache in addition to Memcached
+  [dataflake]
 
 
 1.8.0 (2020-06-11)

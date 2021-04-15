@@ -4,7 +4,7 @@ from setuptools import setup
 import os
 
 
-version = "1.8.1.dev0"
+version = "1.9.0.dev0"
 shortdesc = "LDAP/AD Plugin for Plone/Zope PluggableAuthService (users+groups)"
 longdesc = open(os.path.join(os.path.dirname(__file__), "README.rst")).read()
 longdesc += open(os.path.join(os.path.dirname(__file__), "TODO.rst")).read()
@@ -49,6 +49,7 @@ setup(
         "AccessControl>=3.0",
         "Acquisition",
         "bda.cache",
+        "dogpile.cache",
         "five.globalrequest",
         "node",
         "node.ext.ldap>=1.0b12",
@@ -60,6 +61,7 @@ setup(
         "Products.PluggableAuthService",
         "Products.statusmessages",
         "python-ldap>=3.2.0",
+        "redis",
         "setuptools",
         "six",
         "yafowil>=2.3.1",
