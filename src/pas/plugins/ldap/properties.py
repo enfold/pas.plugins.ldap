@@ -125,7 +125,7 @@ class BasePropertiesForm(BrowserView):
         # props.retry_delay = fetch('server.retry_delay')
         props.page_size = fetch("server.page_size")
         props.cache = fetch("cache.cache")
-        props.memcached = fetch("cache.memcached")
+        props.cache_server = fetch("cache.cache_server")
         props.timeout = fetch("cache.timeout")
         users.baseDN = fetch("users.dn")
         # build attrmap from static keys and dynamic keys inputs
@@ -261,15 +261,15 @@ class LDAPProps(object):
     timeout = propproxy("cache.timeout")
 
     @property
-    def memcached(self):
+    def cache_server(self):
         recordProvider = queryUtility(ICacheSettingsRecordProvider)
         if recordProvider is not None:
             record = recordProvider()
             return record.value
         return u"feature not available"
 
-    @memcached.setter
-    def memcached(self, value):
+    @cache_server.setter
+    def cache_server(self, value):
         recordProvider = queryUtility(ICacheSettingsRecordProvider)
         if recordProvider is not None:
             record = recordProvider()

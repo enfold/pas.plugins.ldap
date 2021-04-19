@@ -85,6 +85,8 @@ The volatile Plugin Cache:
 
 Test node.ext.ldap.cache memcached
 
+.. code-block:: pycon
+
    >>> from zope.component import queryUtility
    >>> from node.ext.ldap.interfaces import ICacheProviderFactory   
    >>> cacheFactory = queryUtility(ICacheProviderFactory)
@@ -104,7 +106,7 @@ Turn on memcached
 
    >>> from pas.plugins.ldap.cache import PasLdapMemcached
    >>> ldapprops = ldap._ldap_props
-   >>> ldapprops.memcached = u'127.0.0.1:11211'
+   >>> ldapprops.cache_server = u'127.0.0.1:11211'
    
    >>> cache = cacheFactory()
    >>> cache
@@ -121,7 +123,7 @@ Change memcached config
 
 .. code-block:: pycon
 
-   >>> ldapprops.memcached = u'127.0.0.2:11211'
+   >>> ldapprops.cache_server = u'127.0.0.2:11211'
    >>> cache is cacheFactory()
    False
    
@@ -132,24 +134,24 @@ Switch to Redis
 
 .. code-block:: pycon
 
-   >>> ldapprops.memcached = u'redis://127.0.0.1'
+   >>> ldapprops.cache_server = u'redis://127.0.0.1'
    
    >>> cache = cacheFactory()
    >>> cache
    <PasLdapRedisCache ['redis://127.0.0.1']>
 
-Check thread safety of memcached connection
+Check thread safety of cache connection
 
 .. code-block:: pycon
 
    >>> cache is cacheFactory()
    True
 
-Change memcached config
+Change cache config
 
 .. code-block:: pycon
 
-   >>> ldapprops.memcached = u'redis://127.0.0.1:6379'
+   >>> ldapprops.cache_server = u'redis://127.0.0.1:6379'
    >>> cache is cacheFactory()
    False
    
