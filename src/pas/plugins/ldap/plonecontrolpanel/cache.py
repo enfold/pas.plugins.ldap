@@ -8,7 +8,7 @@ from zope.component import queryUtility
 from zope.interface import implementer
 
 
-REGKEY = "pas.plugins.ldap.memcached"
+REGKEY = "pas.plugins.ldap.cache"
 
 
 class NullRecord(object):

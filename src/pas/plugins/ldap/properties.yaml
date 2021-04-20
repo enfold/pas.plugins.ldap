@@ -204,12 +204,15 @@ widgets:
         value: expr:context.props.cache
         props:
             label: Cache LDAP queries
-    - memcached:
+    - cache_server:
         factory: '#field:text'
-        value: expr:context.props.memcached
+        value: expr:context.props.cache_server
         props:
-            label: Memcached Server to use
-            help: global - same server for all ldap plugins
+            label: Cache Server to use
+            help: |
+                global - same server for all ldap plugins. Use host:server
+                for memcached and Redis URLs starting with redis: or unix: for
+                Redis.
             field.class: memcached field
             datatype: unicode
     - timeout:
