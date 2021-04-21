@@ -49,7 +49,7 @@ setup(
         "AccessControl>=3.0",
         "Acquisition",
         "bda.cache",
-        "dogpile.cache",
+        "dogpile.cache<1",  # Python 2 compatibility
         "five.globalrequest",
         "node",
         "node.ext.ldap>=1.0b12",

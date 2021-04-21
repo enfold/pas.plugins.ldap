@@ -273,7 +273,7 @@ class LDAPProps(object):
         recordProvider = queryUtility(ICacheSettingsRecordProvider)
         if recordProvider is not None:
             record = recordProvider()
-            record.value = value
+            record.value = value or ''
         else:
             return u"feature not available"
 
