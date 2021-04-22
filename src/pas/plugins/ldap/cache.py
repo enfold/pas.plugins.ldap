@@ -32,7 +32,7 @@ redis_cache = make_region(
 class LoggingProxy(ProxyBackend):
 
     def get(self, key):
-        value = self.proxied.get(key)
+        value = self.proxied.get_serialized(key)
         result = "HIT"
         if value is NO_VALUE:
             result = "MISS"
@@ -41,7 +41,7 @@ class LoggingProxy(ProxyBackend):
 
     def set(self, key, value):
         logger.debug("Setting value for key {}".format(key))
-        return self.proxied.set(key, value)
+        return self.proxied.set_serialized(key, value)
 
 
 class PasLdapCache(object):
@@ -70,10 +70,10 @@ class PasLdapRedisCache(PasLdapCache):
     def _configure(self, server_url, expiration_time=300):
         client = redis_cache.configure(
             'dogpile.cache.redis',
-            expiration_time=expiration_time,
             replace_existing_backend=True,
             arguments={
                 'url': server_url,
+                'redis_expiration_time': expiration_time,
                 'distributed_lock': True,
                 'thread_local_lock': False,
             },

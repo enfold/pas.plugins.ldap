@@ -8,6 +8,9 @@ History
 - Support for Redis cache in addition to Memcached
   [dataflake]
 
+- Drop support for Python 2.7
+  [dataflake]
+
 
 1.8.0 (2020-06-11)
 ------------------
