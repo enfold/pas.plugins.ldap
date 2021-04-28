@@ -140,13 +140,6 @@ Switch to Redis
    >>> cache
    <PasLdapRedisCache ['redis://127.0.0.1']>
 
-Check thread safety of cache connection
-
-.. code-block:: pycon
-
-   >>> cache is cacheFactory()
-   True
-
 Change cache config
 
 .. code-block:: pycon

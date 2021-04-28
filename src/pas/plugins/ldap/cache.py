@@ -31,7 +31,7 @@ redis_cache = make_region(
 
 class LoggingProxy(ProxyBackend):
 
-    def get(self, key):
+    def get_serialized(self, key):
         value = self.proxied.get_serialized(key)
         result = "HIT"
         if value is NO_VALUE:
@@ -39,9 +39,15 @@ class LoggingProxy(ProxyBackend):
         logger.debug("Cache {} for key {}".format(result, key))
         return value
 
-    def set(self, key, value):
+    def get(self, key):
+        return self.get_serialized(key)
+
+    def set_serialized(self, key, value):
         logger.debug("Setting value for key {}".format(key))
         return self.proxied.set_serialized(key, value)
+
+    def set(self, key, value):
+        return self.set_serialized(key, value)
 
 
 class PasLdapCache(object):
@@ -83,7 +89,8 @@ class PasLdapRedisCache(PasLdapCache):
 
     # ICacheProvider interface
     def setTimeout(self, timeout=300):
-        self._client = self._configure(self._servers[0], timeout)
+        if self._client.actual_backend.redis_expiration_time != timeout:
+            self._client = self._configure(self._servers[0], timeout)
 
     def getData(self, func, key, force_reload=False, args=[], kwargs={}):
         ret = self.get(key, force_reload=force_reload)
@@ -154,6 +161,9 @@ class cacheProviderFactory(object):
 
         # thread safety for memcached connections
         cache_provider = getattr(self._thread_local, key, None)
+        if cache_provider is None:
+            # Redis cache is stored directly on the instance
+            cache_provider = getattr(self, key, None)
 
         # if cache_provider is set and server config has not changed
         # return cache_provider
@@ -165,14 +175,14 @@ class cacheProviderFactory(object):
             cache_provider.disconnect()
             del cache_provider
 
-        # establish new cache connection and store
-        # it on local thread
+        # establish new cache connection and store it
         svr = servers[0].lower()
         if svr.startswith('redis') or svr.startswith('unix'):
             cache_provider = PasLdapRedisCache(servers)
+            setattr(self, key, cache_provider)
         else:
             cache_provider = PasLdapMemcached(servers)
-        setattr(self._thread_local, key, cache_provider)
+            setattr(self._thread_local, key, cache_provider)
 
         return cache_provider
 
