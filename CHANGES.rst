@@ -2,8 +2,8 @@
 History
 =======
 
-1.9.0 (unreleased)
-------------------
+1.8.0+enfold1 (2021-06-24)
+--------------------------
 
 - use exact_match when searching for a single user or group by id.
   [enfold-josh]
