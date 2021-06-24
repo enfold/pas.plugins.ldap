@@ -5,6 +5,12 @@ History
 1.9.0 (unreleased)
 ------------------
 
+- use exact_match when searching for a single user or group by id.
+  [enfold-josh]
+
+- Fix import for plone 5.2
+  [frapell]
+
 - Support for Redis cache in addition to Memcached
   [dataflake]
 
